@@ -1,0 +1,63 @@
+{
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": {
+        "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Namespace\",\"metadata\":{\"annotations\":{\"kustomize.toolkit.fluxcd.io/checksum\":\"429a99f367a0d8edbe2c4fc3fb97ecc27352ae4f\"},\"labels\":{\"kustomize.toolkit.fluxcd.io/name\":\"infrastructure\",\"kustomize.toolkit.fluxcd.io/namespace\":\"flux-system\"},\"name\":\"istio-system\"}}\n",
+            "kustomize.toolkit.fluxcd.io/checksum": "429a99f367a0d8edbe2c4fc3fb97ecc27352ae4f"
+        },
+        "creationTimestamp": "2021-09-19T11:34:57Z",
+        "deletionTimestamp": "2021-09-19T12:02:50Z",
+        "labels": {
+            "kustomize.toolkit.fluxcd.io/name": "infrastructure",
+            "kustomize.toolkit.fluxcd.io/namespace": "flux-system"
+        },
+        "name": "istio-system",
+        "resourceVersion": "14162",
+        "uid": "fa6b8c2e-b47d-4d9c-a330-37b452bc4d81"
+    },
+    "spec": {
+        "finalizers": [
+        ]
+    },
+    "status": {
+        "conditions": [
+            {
+                "lastTransitionTime": "2021-09-19T12:02:56Z",
+                "message": "All resources successfully discovered",
+                "reason": "ResourcesDiscovered",
+                "status": "False",
+                "type": "NamespaceDeletionDiscoveryFailure"
+            },
+            {
+                "lastTransitionTime": "2021-09-19T12:02:56Z",
+                "message": "All legacy kube types successfully parsed",
+                "reason": "ParsedGroupVersions",
+                "status": "False",
+                "type": "NamespaceDeletionGroupVersionParsingFailure"
+            },
+            {
+                "lastTransitionTime": "2021-09-19T12:02:56Z",
+                "message": "All content successfully deleted, may be waiting on finalization",
+                "reason": "ContentDeleted",
+                "status": "False",
+                "type": "NamespaceDeletionContentFailure"
+            },
+            {
+                "lastTransitionTime": "2021-09-19T12:02:56Z",
+                "message": "Some resources are remaining: istiooperators.install.istio.io has 1 resource instances",
+                "reason": "SomeResourcesRemain",
+                "status": "True",
+                "type": "NamespaceContentRemaining"
+            },
+            {
+                "lastTransitionTime": "2021-09-19T12:02:56Z",
+                "message": "Some content in the namespace has finalizers remaining: istio-finalizer.install.istio.io in 1 resource instances",
+                "reason": "SomeFinalizersRemain",
+                "status": "True",
+                "type": "NamespaceFinalizersRemaining"
+            }
+        ],
+        "phase": "Terminating"
+    }
+}

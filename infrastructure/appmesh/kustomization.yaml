@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - appmesh-crds.yaml
+  - appmesh-repo.yaml
+  - appmesh-controller.yaml
+  - appmesh-config.yaml
+  - flagger.yaml
