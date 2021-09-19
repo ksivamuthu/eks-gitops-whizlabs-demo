@@ -1,0 +1,42 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: appmesh-controller
+  namespace: appmesh-system
+spec:
+  interval: 1m0s
+  chart:
+     spec:
+       chart: appmesh-controller
+       sourceRef: 
+          kind: HelmRepository
+          name: appmesh    
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: appmesh-inject
+  namespace: appmesh-system
+spec:
+  interval: 1m0s
+  chart:
+    spec:
+      chart: appmesh-inject
+      sourceRef: 
+        kind: HelmRepository
+        name: appmesh     
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: appmesh-prometheus
+  namespace: appmesh-system
+spec:
+  interval: 1m0s
+  chart:
+     spec:
+       chart: appmesh-prometheus
+       sourceRef: 
+          kind: HelmRepository
+          name: appmesh   

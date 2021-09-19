@@ -3,4 +3,9 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - gotk-sync.yaml
+# - image_sync.yaml
+# - notification.yaml
+- infrastructure.yaml
+- app.yaml
 - whizlabs.yaml
+

@@ -1,0 +1,18 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: appmesh
+  namespace: appmesh-system
+spec:
+  interval: 1m0s
+  url: https://aws.github.io/eks-charts/
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: flagger
+  namespace: appmesh-system
+spec:
+  interval: 1m
+  url: https://flagger.app
+---

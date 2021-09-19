@@ -1,0 +1,33 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-gitops-demo
+  region: us-east-1
+
+availabilityZones: 
+  - us-east-1a
+  - us-east-1b
+
+managedNodeGroups:
+  - name: eks-gitops-demo-ng
+    instanceType: t3.medium
+    minSize: 2
+    maxSize: 3
+    iam:
+      withAddonPolicies:
+        appMesh: true
+        appMeshPreview: true
+
+gitops:
+  flux:
+    gitProvider: github
+    flags: 
+      owner: "ksivamuthu"
+      repository: "eks-gitops-whizlabs-demo"
+      private: "true"
+      branch: "main"
+      namespace: "flux-system"
+      path: "clusters/dev"
+      components: "source-controller,kustomize-controller,helm-controller,notification-controller"
+      components-extra: "image-reflector-controller,image-automation-controller"

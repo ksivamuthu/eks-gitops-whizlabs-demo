@@ -1,0 +1,85 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: flagger
+  namespace: istio-system
+spec:
+  interval: 1m
+  url: https://flagger.app
+---  
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: flagger
+  namespace: istio-system
+spec:
+  releaseName: flagger
+  chart:
+    spec:
+      chart: flagger
+      sourceRef:
+        kind: HelmRepository
+        name: flagger
+        namespace: istio-system
+  interval: 1m0s
+  install:
+    remediation:
+      retries: 3
+  values:
+    meshProvider: istio
+    metricsServer: http://prometheus.istio-system.svc.cluster.local:9090
+---
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: error-rate
+  namespace: istio-system
+spec:
+  provider:
+    type: prometheus
+    address: http://prometheus.istio-system:9090
+  query: |
+    100 - sum(
+        rate(
+            istio_requests_total{
+                reporter="destination",
+                destination_workload_namespace="{{ namespace }}",
+                destination_workload=~"{{ target }}",
+                response_code!~"5.*"
+            }[{{ interval }}]
+        )
+    )
+    /
+    sum(
+        rate(
+            istio_requests_total{
+                reporter="destination",
+                destination_workload_namespace="{{ namespace }}",
+                destination_workload=~"{{ target }}"
+            }[{{ interval }}]
+        )
+    )
+    * 100
+---
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: latency
+  namespace: istio-system
+spec:
+  provider:
+    type: prometheus
+    address: http://prometheus.istio-system:9090
+  query: |
+    histogram_quantile(
+        0.99,
+        sum(
+            rate(
+                istio_request_duration_milliseconds_bucket{
+                    reporter="destination",
+                    destination_workload_namespace="{{ namespace }}",
+                    destination_workload=~"{{ target }}"
+                }[{{ interval }}]
+            )
+        ) by (le)
+    )    
